@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 25, 2023 at 05:04 PM
+-- Generation Time: Jan 25, 2023 at 05:14 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -24,24 +24,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_admin`
+--
+
+CREATE TABLE `tbl_admin` (
+  `admin_id` varchar(254) NOT NULL,
+  `username` varchar(245) NOT NULL,
+  `password` varchar(254) NOT NULL,
+  `role` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_produk`
 --
 
-DROP TABLE IF EXISTS `tbl_produk`;
 CREATE TABLE `tbl_produk` (
   `kode_barang` varchar(6) NOT NULL,
   `kelompok_barang` varchar(245) DEFAULT NULL,
   `nama_barang` varchar(254) DEFAULT NULL,
   `berat` double NOT NULL DEFAULT 0,
-  `harga` bigint(20) NOT NULL DEFAULT 0
+  `harga` bigint(20) NOT NULL DEFAULT 0,
+  `admin_id` varchar(254) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_produk`
 --
 
-INSERT INTO `tbl_produk` (`kode_barang`, `kelompok_barang`, `nama_barang`, `berat`, `harga`) VALUES
-('B00001', 'Shoes', 'Geoff Max', 1, 235000);
+INSERT INTO `tbl_produk` (`kode_barang`, `kelompok_barang`, `nama_barang`, `berat`, `harga`, `admin_id`) VALUES
+('B00001', 'Shoes', 'Geoff Max', 1, 235000, NULL);
 
 -- --------------------------------------------------------
 
@@ -49,7 +62,6 @@ INSERT INTO `tbl_produk` (`kode_barang`, `kelompok_barang`, `nama_barang`, `bera
 -- Table structure for table `tbl_resi`
 --
 
-DROP TABLE IF EXISTS `tbl_resi`;
 CREATE TABLE `tbl_resi` (
   `resi_id` varchar(254) NOT NULL,
   `nama_customer` varchar(245) DEFAULT NULL,
@@ -57,15 +69,16 @@ CREATE TABLE `tbl_resi` (
   `no_resi` varchar(35) NOT NULL,
   `kode_barang` varchar(6) NOT NULL,
   `harga` bigint(20) NOT NULL DEFAULT 0,
-  `tanggal_pencatatan` datetime NOT NULL
+  `tanggal_pencatatan` datetime NOT NULL,
+  `admin_id` varchar(254) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_resi`
 --
 
-INSERT INTO `tbl_resi` (`resi_id`, `nama_customer`, `no_telp`, `no_resi`, `kode_barang`, `harga`, `tanggal_pencatatan`) VALUES
-('ajqweqwe1231231', 'Irwansyah', NULL, '18812131231', 'B00001', 235000, '2023-01-25 16:51:30');
+INSERT INTO `tbl_resi` (`resi_id`, `nama_customer`, `no_telp`, `no_resi`, `kode_barang`, `harga`, `tanggal_pencatatan`, `admin_id`) VALUES
+('ajqweqwe1231231', 'Irwansyah', NULL, '18812131231', 'B00001', 235000, '2023-01-25 16:51:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -73,7 +86,6 @@ INSERT INTO `tbl_resi` (`resi_id`, `nama_customer`, `no_telp`, `no_resi`, `kode_
 -- Table structure for table `tbl_resi_activity`
 --
 
-DROP TABLE IF EXISTS `tbl_resi_activity`;
 CREATE TABLE `tbl_resi_activity` (
   `resi_activity_id` varchar(254) NOT NULL,
   `resi_id` varchar(254) NOT NULL,
@@ -94,10 +106,17 @@ INSERT INTO `tbl_resi_activity` (`resi_activity_id`, `resi_id`, `date`, `descrip
 --
 
 --
+-- Indexes for table `tbl_admin`
+--
+ALTER TABLE `tbl_admin`
+  ADD PRIMARY KEY (`admin_id`);
+
+--
 -- Indexes for table `tbl_produk`
 --
 ALTER TABLE `tbl_produk`
-  ADD PRIMARY KEY (`kode_barang`);
+  ADD PRIMARY KEY (`kode_barang`),
+  ADD KEY `admin_id` (`admin_id`);
 
 --
 -- Indexes for table `tbl_resi`
@@ -105,7 +124,8 @@ ALTER TABLE `tbl_produk`
 ALTER TABLE `tbl_resi`
   ADD PRIMARY KEY (`resi_id`),
   ADD UNIQUE KEY `no_resi` (`no_resi`),
-  ADD KEY `kode_barang` (`kode_barang`);
+  ADD KEY `kode_barang` (`kode_barang`),
+  ADD KEY `admin_id` (`admin_id`);
 
 --
 -- Indexes for table `tbl_resi_activity`
@@ -119,10 +139,17 @@ ALTER TABLE `tbl_resi_activity`
 --
 
 --
+-- Constraints for table `tbl_produk`
+--
+ALTER TABLE `tbl_produk`
+  ADD CONSTRAINT `tbl_produk_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `tbl_admin` (`admin_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `tbl_resi`
 --
 ALTER TABLE `tbl_resi`
-  ADD CONSTRAINT `tbl_resi_ibfk_1` FOREIGN KEY (`kode_barang`) REFERENCES `tbl_produk` (`kode_barang`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_resi_ibfk_1` FOREIGN KEY (`kode_barang`) REFERENCES `tbl_produk` (`kode_barang`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_resi_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `tbl_admin` (`admin_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_resi_activity`
