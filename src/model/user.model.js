@@ -4,7 +4,7 @@ const user = {}
 
 user.getAll = (payload) => {
     return new Promise((resolve, reject) => {
-        db.query("SELECT book.title, book_category.category FROM book INNER JOIN book_category ON book.id_category = book_category.id_category",
+        db.query("SELECT * FROM customer",
         (err, res) => {
 
             if (!err) return resolve(res)
@@ -15,7 +15,19 @@ user.getAll = (payload) => {
 
 user.create = (payload) => {
     return new Promise((resolve, reject) => {
-        db.query("INSERT INTO book VALUES ? ", payload, 
+        db.query("INSERT INTO customer SET ? ", payload, 
+        (err, res) => {
+
+            if (!err) return resolve(res)
+            reject(new Error(err))
+        })
+    })
+}
+
+user.update = (payload, id) => {
+    console.log(id);
+    return new Promise((resolve, reject) => {
+        db.query("UPDATE customer SET ? WHERE id_transaksi = ?", [payload, id], 
         (err, res) => {
 
             if (!err) return resolve(res)

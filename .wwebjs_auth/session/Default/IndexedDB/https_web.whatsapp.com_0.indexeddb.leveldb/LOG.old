@@ -1,0 +1,14 @@
+2023/01/25-22:39:38.458 8403 Reusing MANIFEST /Applications/XAMPP/xamppfiles/htdocs/server_wwjs_resi/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/01/25-22:39:38.458 8403 Recovering log #276
+2023/01/25-22:39:38.459 8403 Reusing old log /Applications/XAMPP/xamppfiles/htdocs/server_wwjs_resi/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000276.log 
+2023/01/25-22:39:38.459 8403 Delete type=2 #275
+2023/01/25-22:39:38.732 29103 Level-0 table #281: started
+2023/01/25-22:39:38.735 29103 Level-0 table #281: 15234 bytes OK
+2023/01/25-22:39:38.747 29103 Delete type=0 #276
+2023/01/25-22:39:38.747 29103 Manual compaction at level-0 from '\x00V\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00W\x00\x00\x00' @ 0 : 0; will stop at '\x00V\x06 \x03\x00\x00\x00\x00\x00\x80V@\x00\x01\x0b\x00I\x00d\x00T\x00t\x00l\x009\x000\x00D\x00a\x00y\x00s' @ 110293 : 1
+2023/01/25-22:39:38.747 29103 Compacting 1@0 + 1@1 files
+2023/01/25-22:39:38.755 29103 Generated table #282@0: 5337 keys, 44473 bytes
+2023/01/25-22:39:38.755 29103 Compacted 1@0 + 1@1 files => 44473 bytes
+2023/01/25-22:39:38.767 29103 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/01/25-22:39:38.767 29103 Delete type=2 #281
+2023/01/25-22:39:38.768 29103 Manual compaction at level-0 from '\x00V\x06 \x03\x00\x00\x00\x00\x00\x80V@\x00\x01\x0b\x00I\x00d\x00T\x00t\x00l\x009\x000\x00D\x00a\x00y\x00s' @ 110293 : 1 .. '\x00W\x00\x00\x00' @ 0 : 0; will stop at (end)
